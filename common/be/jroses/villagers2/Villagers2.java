@@ -1,7 +1,6 @@
 package be.jroses.villagers2;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityEggInfo;
 import net.minecraft.entity.EntityList;
 import be.jroses.villagers2.entity.GenericVillager;
 import be.jroses.villagers2.proxy.CommonProxy;
@@ -14,7 +13,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 
-@Mod(modid="Villagers2.0",name="Villagers2.0",version="dev-Version 0.0.0")
+@Mod(modid="Villagers2.0",name="Villagers2.0",version="dev-Version 0.0.1")
 @NetworkMod(clientSideRequired=true,serverSideRequired=false)// if installed on server, then needed on client. if installed on client, not needed on server (mod will just not work.)
 public class Villagers2 {
 
@@ -41,10 +40,6 @@ public class Villagers2 {
 	public static void registerEntityEgg(Class<? extends Entity> entity,int color1,int color2){
 		//find last unused id
 		for(;EntityList.getStringFromID(entityId)!=null;entityId++);
-		//EntityList.addMapping(entity,"testString", entityId, color1, color2);
-		
-		EntityList.IDtoClassMapping.put(entityId, entity);
-		EntityList.entityEggs.put(entityId,new EntityEggInfo(entityId, color1, color2));
-		System.out.println("beeing called");
+		EntityList.addMapping(entity,"testString", entityId, color1, color2);
 	}
 }
