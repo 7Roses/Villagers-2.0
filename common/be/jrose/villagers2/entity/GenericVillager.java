@@ -1,11 +1,6 @@
 package be.jrose.villagers2.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import be.jrose.villagers2.aiengine.core.AIEngine;
 import be.jrose.villagers2.aiengine.core.AgentMemory;
@@ -33,7 +28,11 @@ public class GenericVillager extends EntityLiving {
 		this.texture = "/GenericVillager2.png";
 		System.out.println("CONSTRUCTOR CALLED");
 		this.memory = new AgentMemory();
-		this.setAIMoveSpeed(0.25F);
+		this.getNavigator().setAvoidSun(false);
+		this.getNavigator().setAvoidsWater(true);
+		this.getNavigator().setEnterDoors(true);
+		this.getNavigator().setCanSwim(true);
+		this.setAIMoveSpeed(0.3F);
 	}
 
 	@Override

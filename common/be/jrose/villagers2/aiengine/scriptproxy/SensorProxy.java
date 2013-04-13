@@ -35,4 +35,9 @@ public class SensorProxy {
 		return ret;
 	}
 	
+	public Long getWorldTime()
+	{
+		return this.agent.worldObj.getWorldTime();
+	}
+	
 }
