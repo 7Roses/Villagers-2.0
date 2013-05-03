@@ -4,6 +4,7 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.util.Vec3;
+import be.jrose.villagers2.Villagers2;
 import be.jrose.villagers2.entity.GenericVillager;
 
 
@@ -40,8 +41,13 @@ public class VillagerProxy {
 	
 	public boolean setDestination(Integer[] destination)
 	{
-		boolean ret;
-		PathEntity foundPath = this.agent.worldObj.getEntityPathToXYZ(this.agent, destination[0], destination[1], destination[2], 50, false, false, false, false);
+	    System.out.println("SET NAV IS BEEN CALLED !!!!");
+	    boolean ret;
+		boolean doorallowed = true;
+		this.agent.getNavigator().clearPathEntity();
+		return this.agent.getNavigator().tryMoveToXYZ((double)destination[0], (double)destination[1],(double)destination[2], 0.3F);
+		/*
+		PathEntity foundPath = this.agent.worldObj.getEntityPathToXYZ(this.agent, destination[0], destination[1], destination[2], 50, doorallowed, false, false, false);
 		if (foundPath !=null)
 		{
 			System.out.println("my path exists!");	
@@ -51,7 +57,13 @@ public class VillagerProxy {
 		System.out.println(VillagerProxyDebug());
 		ret = this.agent.getNavigator().setPath(foundPath, this.agent.getAIMoveSpeed());
 		System.out.println(VillagerProxyDebug());
-		return ret;
+		return ret;*/
+		
+	}
+	
+	
+	public void tmp()
+	{
 		
 	}
 	
@@ -85,8 +97,15 @@ public class VillagerProxy {
 		return sb.toString();
 	}
 	
-	public void buildBlock(int x, int y,int z)
+	public void buildBlock(int x, int y,int z,int blockId)
 	{
-		System.out.println("here will the code for setting a block (and check if you have have the resources for it.)");
+		/*if(this.agent.getInventory().hasItem(blockId) || Villagers2.DEBUG)
+		{//*/
+			this.agent.worldObj.setBlock(x, y, z, blockId);
+			if(!Villagers2.DEBUG)
+			{
+				this.agent.getInventory().consumeItem(blockId);
+			}
+		//}
 	}
 }

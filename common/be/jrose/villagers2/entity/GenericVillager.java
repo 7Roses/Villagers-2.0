@@ -1,12 +1,15 @@
 package be.jrose.villagers2.entity;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+import be.jrose.villagers2.Villagers2;
 import be.jrose.villagers2.aiengine.core.AIEngine;
 import be.jrose.villagers2.aiengine.core.AgentMemory;
 import be.jrose.villagers2.aiengine.core.Script;
 import be.jrose.villagers2.aiengine.core.ScriptContainer;
 import be.jrose.villagers2.aiengine.core.SensorScript;
+import be.jrose.villagers2.inventory.InventoryVillager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTBase;
@@ -20,19 +23,28 @@ public class GenericVillager extends EntityLiving {
 
 	protected ScriptContainer sensorScripts;
 
-	protected AIEngine fsmEngine = AIEngine.getInstance();
+	protected AIEngine fsmEngine = Villagers2.aiEngine;
 	protected AgentMemory memory;
 
+	/** 
+	 * the inventory used for this villager
+	 * if cheater flag is not set you will consume blocks automatical from here when building
+	 * */
+	protected InventoryVillager inventory;
+	
+	/** variable which will let you skip certain food checks, block checks,... (for example if you are makeing an adventure map whith the villagers.*/
+	protected boolean cheater = false;
+	
 	public GenericVillager(World par1World) {
 		super(par1World);
 		this.texture = "/GenericVillager2.png";
 		System.out.println("CONSTRUCTOR CALLED");
 		this.memory = new AgentMemory();
+		this.inventory = new InventoryVillager();
 		this.getNavigator().setAvoidSun(false);
 		this.getNavigator().setAvoidsWater(true);
 		this.getNavigator().setEnterDoors(true);
 		this.getNavigator().setCanSwim(true);
-		this.setAIMoveSpeed(0.3F);
 	}
 
 	@Override
@@ -55,6 +67,9 @@ public class GenericVillager extends EntityLiving {
 		*/
 	}
 
+	public InventoryVillager getInventory(){return this.inventory;}
+
+	
 	protected boolean isAIEnabled() {
 		return true;
 	}
@@ -90,6 +105,9 @@ public class GenericVillager extends EntityLiving {
 	//	System.out.println("have : " + this.sensorScripts.getScriptCount()+ "sensorScripts");
 		fsmEngine.updateSensors(this);
 		fsmEngine.tick(this);
+		System.out.println("aimove: "+this.getAIMoveSpeed());
+		System.out.println("aipath: "+(this.getNavigator().getPath()==null?"null!!":this.getNavigator().getPath()));
+		
 		// fsmActor.update();
 	}
 
@@ -99,7 +117,9 @@ public class GenericVillager extends EntityLiving {
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
 		if (first) {
-			SensorScript ss = new SensorScript("test.js");
+		    // System.out.println("filepath: "+(new File("resource/mod/Villagers2Js/test.js")).getAbsolutePath());
+			//SensorScript ss = new SensorScript("resource/mod/Villagers2Js/test.js");
+		    SensorScript ss = new SensorScript("testscript");
 			if (this.sensorScripts == null) {
 				this.sensorScripts = new ScriptContainer();
 			}

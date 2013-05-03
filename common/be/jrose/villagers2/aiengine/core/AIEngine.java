@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.script.ScriptException;
+
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
+
+import be.jrose.scriptEngine.core.ScriptCache;
+import be.jrose.scriptEngine.core.ScriptManager;
 import be.jrose.scriptEngine.core.ScriptProcessor;
 import be.jrose.villagers2.aiengine.scriptproxy.LogProxy;
 import be.jrose.villagers2.aiengine.scriptproxy.MemoryProxy;
@@ -18,23 +26,19 @@ public class AIEngine {
 
 	//private static final boolean DEBUGBUILD = true;
 
-	private static AIEngine instance;
+	private ScriptProcessor scriptprocessor;
+	private ScriptCache cache;
 	
-	private AIEngine() {
+	public AIEngine(ScriptCache cache,ScriptProcessor scriptprocessor) {
 		HashMap<String,Object> binding = new HashMap<String,Object>();
 		binding.put("log", new LogProxy());
 		binding.put("Logger",new LoggingProxy());
 		binding.put("sensors",SensorProxy.getInstance());
 		binding.put("memory", MemoryProxy.getInstance());
 		binding.put("actors", VillagerProxy.getInstance()); // used for taking actions!
-		ScriptProcessor.getInstance().setBindings(binding);
-	}
-
-	public static AIEngine getInstance() {
-		if (instance == null) {
-			instance = new AIEngine();
-		}
-		return instance;
+		this.scriptprocessor = scriptprocessor;
+		this.scriptprocessor.setBindings(binding);
+		this.cache = cache;
 	}
 
 	// find the scripts currently registered for this agent to be run.
@@ -57,7 +61,19 @@ public class AIEngine {
 			}
 			String[] functions = new String[0];
 					 functions = functionsToCall.toArray(functions);
-			ScriptProcessor.getInstance().runScripts(currentScript.getScriptLocation(), functions);
+			try
+            {
+                this.scriptprocessor.runScript(cache.getScriptByScriptName(currentScript.getScriptLocation())
+                        , functions);
+            } catch (NoSuchMethodException e)
+            {
+                System.err.println("error while executing an script, identifier:"+currentScript.getScriptLocation());
+                 e.printStackTrace();
+            } catch (ScriptException e)
+            {
+                System.err.println("error while executing an script, identifier:"+currentScript.getScriptLocation());
+                e.printStackTrace();
+            }
 		}
 
 	}

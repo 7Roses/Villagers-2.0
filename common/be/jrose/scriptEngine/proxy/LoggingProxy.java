@@ -3,12 +3,13 @@ package be.jrose.scriptEngine.proxy;
 import java.util.logging.Logger;
 
 import be.jrose.scriptEngine.proxy.scriptSideInterface.IScriptLoggerProxy;
+import be.jrose.villagers2.Villagers2;
 
 public class LoggingProxy implements IScriptLoggerProxy {
 
 
 	
-	private Logger log = Logger.getLogger(this.getClass().getName());
+	private Logger log = Logger.getLogger(Villagers2.class.getName());
 	
 	public void info(Object obj)
 	{
@@ -17,9 +18,6 @@ public class LoggingProxy implements IScriptLoggerProxy {
 	public void debug(Object obj)
 	{
 		log.finest(obj.toString());
-	}
-	public void sysout(Object obj){
-		System.out.println(obj);
 	}
 
 }
