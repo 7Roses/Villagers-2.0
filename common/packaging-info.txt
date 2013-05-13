@@ -1,0 +1,19 @@
+be.ehb.student.jorisderijck.*
+	.Villagers2Js	place for the Villagers2Js class (mod definition)
+		.client.render		client useage only classes (renderers ect.)
+		.entity		every class needed for the java side of the entity, not the interaction classes of the javascript engine
+		.lib		place to be for all the constant having classes
+		.proxy		place for the proxy files of mods
+		.utils		places for aid classes (like FileHelper.java)
+	.engine
+		.core
+			.script	every class needed for RUNNING the js files
+			.ai		every class needed for RUNNINg the ai scripts and binding the current villager to it
+				.memory		Imemory.java,Memory.java, MemorySaveHandler.java
+		.binds	every class which will be an translation class for binding certain javafunctions to js functions
+		.scriptutils
+			.jobs	classes needed for easy creation of jobs
+			.communication
+			.village
+				.buildings
+		.*

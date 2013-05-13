@@ -1,6 +1,7 @@
+function getName() {return "testbuildRoad";}
 function onStartSensor()
 {
-	log.log("sensor starts");
+	Logger.info("sensor starts");
 	memory.save("test",-1);
 	var loc = sensors.getPosition();
 	loc[0] = 3;
@@ -22,7 +23,7 @@ function onUpdateSensor()
 		
 		test = 1;
 		memory.save("test",test);
-		log.log("some single use code");
+		Logger.info("some single use code");
 
 	}
 	var loc = sensors.getPosition();
@@ -39,7 +40,7 @@ function onUpdateSensor()
 
 	//log.log(test);
 }
-function onStopSensor(){log.log("sensor stops");}
+function onStopSensor(){Logger.info("sensor stops");}
 
 //onUpdateSensor();
 
