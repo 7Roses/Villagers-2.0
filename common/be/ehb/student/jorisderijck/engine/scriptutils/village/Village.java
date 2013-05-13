@@ -2,6 +2,9 @@ package be.ehb.student.jorisderijck.engine.scriptutils.village;
 
 import java.util.ArrayList;
 
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+
 import be.ehb.student.jorisderijck.Villagers2Js.entity.GenericVillager;
 import be.ehb.student.jorisderijck.engine.scriptutils.communication.Message;
 import be.ehb.student.jorisderijck.engine.scriptutils.jobs.AbstractJob;
@@ -14,6 +17,13 @@ import be.ehb.student.jorisderijck.engine.scriptutils.village.buildings.Building
  * */
 public class Village {
 
+    
+    /**
+     * the reference of the world where this Village exists in.
+     * */
+    private World worldref;
+    
+    
 	/**
 	 * array with the current buildings fully functional in this village
 	 * */
@@ -36,7 +46,9 @@ public class Village {
 	ArrayList<GenericVillager> villagers;
 	
 	
-	public void registerVillager(GenericVillager villager){}
+	public void registerVillager(GenericVillager villager)
+	{   
+	}
 	public void unregisterVillager(GenericVillager villager){}
 	
 	public int getAmountOfVillagers()
