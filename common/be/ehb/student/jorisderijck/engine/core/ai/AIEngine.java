@@ -10,10 +10,12 @@ import javax.script.ScriptException;
 
 import be.ehb.student.jorisderijck.Villagers2Js.entity.GenericVillager;
 import be.ehb.student.jorisderijck.Villagers2Js.lib.Reference;
-import be.ehb.student.jorisderijck.engine.binds.LoggingProxy;
 import be.ehb.student.jorisderijck.engine.binds.MemoryProxy;
 import be.ehb.student.jorisderijck.engine.binds.SensorProxy;
 import be.ehb.student.jorisderijck.engine.binds.VillagerProxy;
+import be.ehb.student.jorisderijck.engine.binds.facades.IAgentBinder;
+import be.ehb.student.jorisderijck.engine.binds.facades.LoggingProxy;
+import be.ehb.student.jorisderijck.engine.binds.facades.ScriptSelfReflection;
 import be.ehb.student.jorisderijck.engine.core.script.ScriptCache;
 import be.ehb.student.jorisderijck.engine.core.script.ScriptProcessor;
 
@@ -27,11 +29,11 @@ public class AIEngine {
 	private ScriptCache cache;
 	
 	public AIEngine(ScriptCache cache,ScriptProcessor scriptprocessor) {
+	    ScriptSelfReflection self = new ScriptSelfReflection();
+	    
 		HashMap<String,Object> binding = new HashMap<String,Object>();
 		binding.put("Logger",new LoggingProxy());
-		binding.put("sensors",SensorProxy.getInstance());
-		binding.put("memory", new MemoryProxy());
-		binding.put("actors", VillagerProxy.getInstance()); // used for taking actions!
+		binding.put("self",self);
 		this.scriptprocessor = scriptprocessor;
 		this.scriptprocessor.setBindings(binding);
 		this.cache = cache;
@@ -77,14 +79,11 @@ public class AIEngine {
 
 	/**
 	 * sets the variable references of the various proxys to the current AIagent
-	 * and then override the privious bindings with it.
+	 * and then override the previous bindings with it.
 	 * */
 	private void bindProxy(GenericVillager agent) {
-		SensorProxy sensproxy = SensorProxy.getInstance();
-		sensproxy.setAgent(agent);
-		MemoryProxy memoryproxy = (MemoryProxy) this.scriptprocessor.getBoundObject("memory");
-		memoryproxy.setMemory(agent.getMemory());
-		VillagerProxy.getInstance().setAgent(agent);
+		IAgentBinder self = (IAgentBinder) this.scriptprocessor.getBoundObject("self");
+		self.setAgent(agent);
 	}
 
 	public void tick(GenericVillager genericVillager) {

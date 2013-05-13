@@ -2,7 +2,7 @@ package be.ehb.student.jorisderijck.engine.binds;
 
 import be.ehb.student.jorisderijck.engine.core.ai.memory.Memory;
 
-public class MemoryProxy{
+public class MemoryProxy implements IMemoryProxy{
 
 	private Memory memory;
 	
@@ -13,19 +13,35 @@ public class MemoryProxy{
 		this.memory = memory;
 	}
 
-	public void forget(String variableName) {
+	/* (non-Javadoc)
+     * @see be.ehb.student.jorisderijck.engine.binds.facades.IMemoryProxy#forget(java.lang.String)
+     */
+	@Override
+    public void forget(String variableName) {
 		this.memory.remove(variableName);
 	}
 
-	public void save(String variableName, Object value) {
+	/* (non-Javadoc)
+     * @see be.ehb.student.jorisderijck.engine.binds.facades.IMemoryProxy#save(java.lang.String, java.lang.Object)
+     */
+	@Override
+    public void save(String variableName, Object value) {
 		this.memory.setObject(variableName, value);
 	}
 
-	public Object load(String variableName) {
+	/* (non-Javadoc)
+     * @see be.ehb.student.jorisderijck.engine.binds.facades.IMemoryProxy#load(java.lang.String)
+     */
+	@Override
+    public Object load(String variableName) {
 		return this.memory.getObject(variableName);
 	}
 
-	public Boolean has(String variableName) {
+	/* (non-Javadoc)
+     * @see be.ehb.student.jorisderijck.engine.binds.facades.IMemoryProxy#has(java.lang.String)
+     */
+	@Override
+    public Boolean has(String variableName) {
 		return this.memory.hasKey(variableName);
 	}
 	

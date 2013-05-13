@@ -2,11 +2,7 @@ package be.ehb.student.jorisderijck.engine.binds;
 
 import be.ehb.student.jorisderijck.Villagers2Js.entity.GenericVillager;
 
-public class SensorProxy {
-
-	private static SensorProxy instance;
-
-	private SensorProxy(){}
+public class SensorProxy implements ISensorProxy {
 	
 	private GenericVillager agent;
 	
@@ -14,19 +10,20 @@ public class SensorProxy {
 		this.agent = agent;
 	}
 
-	public static SensorProxy getInstance() {
-		if (instance == null) {
-			instance = new SensorProxy();
-		}
-		return instance;
-	}
-
-	public int age()
+	/* (non-Javadoc)
+     * @see be.ehb.student.jorisderijck.engine.binds.facades.ISensorProxy#age()
+     */
+	@Override
+    public int age()
 	{
 		return this.agent.getAge();
 	}
 	
-	public Integer[] getPosition()
+	/* (non-Javadoc)
+     * @see be.ehb.student.jorisderijck.engine.binds.facades.ISensorProxy#getPosition()
+     */
+	@Override
+    public Integer[] getPosition()
 	{
 		Integer[] ret = new Integer[3];
 		ret[0] = (int) this.agent.posX;
@@ -35,7 +32,11 @@ public class SensorProxy {
 		return ret;
 	}
 	
-	public Long getWorldTime()
+	/* (non-Javadoc)
+     * @see be.ehb.student.jorisderijck.engine.binds.facades.ISensorProxy#getWorldTime()
+     */
+	@Override
+    public Long getWorldTime()
 	{
 		return this.agent.worldObj.getWorldTime();
 	}

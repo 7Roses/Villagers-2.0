@@ -1,13 +1,14 @@
-package be.ehb.student.jorisderijck.engine.binds;
+package be.ehb.student.jorisderijck.engine.binds.facades;
 
 import java.util.logging.Logger;
 
 import net.minecraft.client.Minecraft;
 
+import be.ehb.student.jorisderijck.Villagers2Js.entity.GenericVillager;
 import be.ehb.student.jorisderijck.Villagers2Js.lib.Reference;
 import be.ehb.student.jorisderijck.Villagers2Js.lib.ScriptEngineConstants;
 
-public class LoggingProxy {
+public class LoggingProxy implements IAgentBinder {
 
 
 	
@@ -27,5 +28,11 @@ public class LoggingProxy {
 	    if (Minecraft.getMinecraft().theWorld.isRemote && enabled)
 	        Minecraft.getMinecraft().thePlayer.addChatMessage(obj.toString());
 	}
+	
+    @Override
+    public void setAgent(GenericVillager villager)
+    {
+        // not needed here, this is a non agent specific code.
+    }
 
 }

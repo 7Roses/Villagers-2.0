@@ -8,23 +8,14 @@ import be.ehb.student.jorisderijck.Villagers2Js.entity.GenericVillager;
 /**
  * class made so uses don't need to use obscrufaded function calls (those can change from version till version)
  * */
-public class VillagerProxy {
+public class VillagerProxy implements IVillagerProxy {
 
 	
-	private static VillagerProxy instance;
 	private GenericVillager agent;
 	private PathNavigate navigator;
 	
-	private VillagerProxy(){}
+	public VillagerProxy(){}
 	
-	public static VillagerProxy getInstance()
-	{
-		if (instance == null)
-		{
-			instance = new VillagerProxy();
-		}
-		return instance;
-	}
 	
 	/**
 	 * set's the agent for wich the proxy will be active.
@@ -36,7 +27,11 @@ public class VillagerProxy {
 		this.navigator = agent.getNavigator();
 	}
 	
-	public boolean setDestination(Integer[] destination)
+	/* (non-Javadoc)
+     * @see be.ehb.student.jorisderijck.engine.binds.facades.IVillagerProxy#setDestination(java.lang.Integer[])
+     */
+	@Override
+    public boolean setDestination(Integer[] destination)
 	{
 	    System.out.println("SET NAV IS BEEN CALLED !!!!");
 	    boolean ret;
@@ -58,13 +53,11 @@ public class VillagerProxy {
 		
 	}
 	
-	
-	public void tmp()
-	{
-		
-	}
-	
-	public Integer[] getDestination()
+	/* (non-Javadoc)
+     * @see be.ehb.student.jorisderijck.engine.binds.facades.IVillagerProxy#getDestination()
+     */
+	@Override
+    public Integer[] getDestination()
 	{
 		Integer[] ret = {0,0,0};
 		if (this.navigator.getPath() != null)
@@ -76,7 +69,11 @@ public class VillagerProxy {
 		return ret; 
 	}
 	
-	public PathNavigate getNavigator()
+	/* (non-Javadoc)
+     * @see be.ehb.student.jorisderijck.engine.binds.facades.IVillagerProxy#getNavigator()
+     */
+	@Override
+    public PathNavigate getNavigator()
 	{
 		return this.navigator;
 	}
@@ -94,7 +91,11 @@ public class VillagerProxy {
 		return sb.toString();
 	}
 	
-	public void buildBlock(int x, int y,int z,int blockId)
+	/* (non-Javadoc)
+     * @see be.ehb.student.jorisderijck.engine.binds.facades.IVillagerProxy#buildBlock(int, int, int, int)
+     */
+	@Override
+    public void buildBlock(int x, int y,int z,int blockId)
 	{
 		/*if(this.agent.getInventory().hasItem(blockId) || Villagers2.DEBUG)
 		{//*/

@@ -19,7 +19,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import be.ehb.student.jorisderijck.Villagers2Js.lib.Reference;
-import be.ehb.student.jorisderijck.engine.binds.LoggingProxy;
+import be.ehb.student.jorisderijck.engine.binds.facades.LoggingProxy;
 
 public class ScriptProcessor {
     

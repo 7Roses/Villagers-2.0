@@ -2,39 +2,38 @@ function getName() {return "testbuildRoad";}
 function onStartSensor()
 {
 	Logger.info("sensor starts");
-	memory.save("test",-1);
+	self.save("test",-1);
 	var loc = sensors.getPosition();
 	loc[0] = 3;
 	loc[1] = 4;
 	loc[2] = 5;
-	actors.setDestination(loc);
+	self.setDestination(loc);
 }
 function onUpdateSensor()
 {
 	//log.log("sensor updates");
-	var age = sensors.age();
-	log.log(age);
+	var age = self.age();
 	//Logger.debug("WORLD TIME: "+sensors.getWorldTime());
-	var time = sensors.getWorldTime();
+	var time = self.getWorldTime();
 	//log.log("world time: "+ time);
-	var test = memory.load("test");
+	var test = self.load("test");
 	if (test ==-1)
 	{
 		
 		test = 1;
-		memory.save("test",test);
+		self.save("test",test);
 		Logger.info("some single use code");
 
 	}
-	var loc = sensors.getPosition();
+	var loc = self.getPosition();
 	//log.log("location: x="+loc[0]+"\ty="+loc[1]+"\tz="+loc[2]);
 	if (loc[0] == 3 && loc[1] == 4 && loc[2] == 5)
 	{
-		actors.buildBlock(loc[0],loc[1]-1,loc[2],1);
-		actors.buildBlock(loc[0]-1,loc[1]-1,loc[2],1);
-		actors.buildBlock(loc[0]+1,loc[1]-1,loc[2],1);
+		self.buildBlock(loc[0],loc[1]-1,loc[2],1);
+		self.buildBlock(loc[0]-1,loc[1]-1,loc[2],1);
+		self.buildBlock(loc[0]+1,loc[1]-1,loc[2],1);
 	}
-	var dest = actors.getDestination();
+	var dest = self.getDestination();
 	//log.info("destination: x="+dest[0]+"\ty="+dest[1]+"\tz="+dest[2]);
 	
 
@@ -47,16 +46,16 @@ function onStopSensor(){Logger.info("sensor stops");}
 
 //BeBornJob()
 // this job will find the closest other villager and request some data from it.
-// then it will save those data in it's memory
+// then it will save those data in it's self
 
 /*
 
 function onStartJob()
 {
-	// to be shure the variable exists in the agent's memory I register my fariables at startup.
-	memory.register("my_father","Integer"); // all those values will be ID's of the existing objects (or not existing anymore...)
-	memory.register("my_mother","Integer");
-	memory.register("my_village","Intger");
+	// to be shure the variable exists in the agent's self I register my fariables at startup.
+	self.register("my_father","Integer"); // all those values will be ID's of the existing objects (or not existing anymore...)
+	self.register("my_mother","Integer");
+	self.register("my_village","Intger");
 }
 
 function onUpdateJob()
@@ -66,14 +65,14 @@ function onUpdateJob()
 	var sexOfFirstParrent = communicate.sendMessage(villager,"your sex?"); // communicate api will send messages to all the registered eventHandlers for type Event.COMMUNICATION
 	if (sexOfFirstParrent == "v")
 	{
-		memory.save("my_mother",villager);
+		self.save("my_mother",villager);
 		var village = communicate.sendMessage(village,"your village?");
-		memory.save("my_village",village);
+		self.save("my_village",village);
 
 	}
 	
 	villager = communicate.sendMessage(villager,"who's your partner?");
-	memory.save("my_father",villager);
+	self.save("my_father",villager);
 	
 	// if you would want to stop the current script itself use follow code: system.stop(SCRIPTNAME); // SCRIPTNAME is a variable bind to the current <T extends Script>.getSriptLocation()
 }
