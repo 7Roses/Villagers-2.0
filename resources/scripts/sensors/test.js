@@ -3,7 +3,7 @@ function onStartSensor()
 {
 	Logger.info("sensor starts");
 	self.save("test",-1);
-	var loc = sensors.getPosition();
+	var loc = self.getPosition();
 	loc[0] = 3;
 	loc[1] = 4;
 	loc[2] = 5;

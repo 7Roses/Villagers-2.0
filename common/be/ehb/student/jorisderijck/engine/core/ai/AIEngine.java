@@ -10,11 +10,9 @@ import javax.script.ScriptException;
 
 import be.ehb.student.jorisderijck.Villagers2Js.entity.GenericVillager;
 import be.ehb.student.jorisderijck.Villagers2Js.lib.Reference;
-import be.ehb.student.jorisderijck.engine.binds.MemoryProxy;
-import be.ehb.student.jorisderijck.engine.binds.SensorProxy;
-import be.ehb.student.jorisderijck.engine.binds.VillagerProxy;
 import be.ehb.student.jorisderijck.engine.binds.facades.IAgentBinder;
 import be.ehb.student.jorisderijck.engine.binds.facades.LoggingProxy;
+import be.ehb.student.jorisderijck.engine.binds.facades.ScriptJobUtils;
 import be.ehb.student.jorisderijck.engine.binds.facades.ScriptSelfReflection;
 import be.ehb.student.jorisderijck.engine.core.script.ScriptCache;
 import be.ehb.student.jorisderijck.engine.core.script.ScriptProcessor;
@@ -30,10 +28,13 @@ public class AIEngine {
 	
 	public AIEngine(ScriptCache cache,ScriptProcessor scriptprocessor) {
 	    ScriptSelfReflection self = new ScriptSelfReflection();
+	    LoggingProxy logger = new LoggingProxy();
+	    ScriptJobUtils utils = new ScriptJobUtils();
 	    
 		HashMap<String,Object> binding = new HashMap<String,Object>();
-		binding.put("Logger",new LoggingProxy());
+		binding.put("Logger",logger);
 		binding.put("self",self);
+		binding.put("utils", utils);
 		this.scriptprocessor = scriptprocessor;
 		this.scriptprocessor.setBindings(binding);
 		this.cache = cache;

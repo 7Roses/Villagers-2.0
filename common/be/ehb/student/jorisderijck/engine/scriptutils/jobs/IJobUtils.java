@@ -12,5 +12,5 @@ public interface IJobUtils {
     public AtomicalJob createAtomicJobWithProperties(String jobname,JobProperty ... properties);
     
     public ComplexJob createComplexJob(String jobname);
-    public ComplexJob createComplexJobWithJobs(String jobname,AbstractJob ... abstractJobs);
+    public ComplexJob createComplexJobWithJobs(String jobname,AbstractJob ... jobs);
 }
