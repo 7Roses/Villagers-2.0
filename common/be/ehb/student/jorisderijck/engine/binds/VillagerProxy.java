@@ -97,13 +97,13 @@ public class VillagerProxy implements IVillagerProxy {
 	@Override
     public void buildBlock(int x, int y,int z,int blockId)
 	{
-		/*if(this.agent.getInventory().hasItem(blockId) || Villagers2.DEBUG)
-		{//*/
+		if(Villagers2Js.DEBUG || this.agent.getInventory().getSlotForItem(blockId)!=-1)
+		{
 			this.agent.worldObj.setBlock(x, y, z, blockId);
 			if(!Villagers2Js.DEBUG)
 			{
 				this.agent.getInventory().consumeItem(blockId);
 			}
-		//}
+		}
 	}
 }
