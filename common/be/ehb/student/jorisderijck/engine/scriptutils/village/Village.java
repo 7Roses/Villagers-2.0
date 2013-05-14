@@ -64,11 +64,20 @@ public class Village {
 		return ret;
 	}
 	
-	public void broadcast(GenericVillager sender,Message mesage)
+	public void broadcast(Message message)
+    {
+        for(GenericVillager v:villagers)
+        {
+            v.getMemory().addMessage(message);
+        }
+    }
+	
+	public void broadcast(GenericVillager sender,Message message)
 	{
 		for(GenericVillager v:villagers)
 		{
-			// send the data to them...
+			if (sender.getPersistentID().equals(v.getPersistentID())) continue; // Don't send to yourself!
+			    v.getMemory().addMessage(message);
 		}
 	}
 	
