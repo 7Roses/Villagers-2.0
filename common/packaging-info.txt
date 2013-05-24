@@ -10,6 +10,7 @@ be.ehb.student.jorisderijck.*
 			.script	every class needed for RUNNING the js files
 			.ai		every class needed for RUNNINg the ai scripts and binding the current villager to it
 				.memory		Imemory.java,Memory.java, MemorySaveHandler.java
+				.village	VillageTick.java // still a core.ai function, not a scriptutil so it shouldn't be implemented at the other village package
 		.binds	every class which will be an translation class for binding certain javafunctions to js functions
 		.scriptutils
 			.jobs	classes needed for easy creation of jobs

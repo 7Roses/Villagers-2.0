@@ -1,5 +1,6 @@
 package be.ehb.student.jorisderijck.engine.core.script;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.script.CompiledScript;
 import javax.script.ScriptException;
 
 import net.minecraft.world.World;
+import net.minecraftforge.event.world.WorldEvent;
 
 import be.ehb.student.jorisderijck.Villagers2Js.lib.Reference;
 import be.ehb.student.jorisderijck.Villagers2Js.lib.ScriptEngineConstants;
@@ -40,10 +42,14 @@ public class ScriptManager {
      */
     public void loadWorldScripts(World world)
     {
-        int scriptsLoaded = loadFromDirectory(world.getSaveHandler()
-                .getWorldDirectoryName());
-        log.info("ScriptManager loaded: " + scriptsLoaded + " into it's cache");
-    }
+        StringBuilder sb = new StringBuilder("saves");
+        sb.append(File.separatorChar).append(world.getSaveHandler().getWorldDirectoryName());
+        sb.append(File.separatorChar).append(world.provider.getSaveFolder()==null?"region":world.provider.getSaveFolder());
+        String loadDir = sb.toString();
+        int scriptsLoaded = loadFromDirectory(loadDir);
+        log.info("ScriptManager added: " + scriptsLoaded + " into it's cache");
+        log.info(String.format("ScriptManager curently has %s scripts loaded into cache",this.cache.getsize()));
+        }
 
     /**
      * private function used for {@link #loadScripts()} and
@@ -57,7 +63,7 @@ public class ScriptManager {
         List<String> dirs = FileHelper.listDirectories(rootdirectory);
         List<ScriptContainer<CompiledScript>> scripts = new ArrayList<ScriptContainer<CompiledScript>>();
         // for debug
-        if (files.size() > 0)
+        if (files!=null && files.size() > 0)
         {
             log.info(String.format("found %d valid files and %d directories in the current dir", files.size(),dirs.size()));
             for (String path : files)
@@ -87,9 +93,11 @@ public class ScriptManager {
         }
         this.cache.addAll(scripts);
         int loadedScripts = scripts.size(); // statistic number
-        for (String dir : dirs)
-        {
-            loadedScripts += loadFromDirectory(dir); // load scripts from subdirs (recuscive)
+        if (dirs !=null && dirs.size()>0){
+            for (String dir : dirs)
+            {
+                loadedScripts += loadFromDirectory(dir); // load scripts from subdirs (recuscive)
+            }
         }
         return loadedScripts;
     }
@@ -122,6 +130,7 @@ public class ScriptManager {
      * private function for calling the scriptProcessor and request compilation
      * for certain scripts.
      */
+    @SuppressWarnings("unused") // will come when the command reload is in the mod, or if regular rechecking of scripts works.
     private List<ScriptContainer<CompiledScript>> compileList(
             List<ScriptContainer<CompiledScript>> scripts)
     {
@@ -143,11 +152,13 @@ public class ScriptManager {
     }
 
     /** private function for adding the compiled scripts to the scriptcache */
+    @SuppressWarnings("unused") // will come when the command reload is in the mod, or if regular rechecking of scripts works.
     private void addToCache(List<ScriptContainer<CompiledScript>> scripts)
     {
         this.cache.addAll(scripts);
     }
 
+    @SuppressWarnings("unused") // will come when the command reload is in the mod, or if regular rechecking of scripts works.
     private void removeFromCache(List<ScriptContainer<CompiledScript>> scripts)
     {
         this.cache.removeAll(scripts);

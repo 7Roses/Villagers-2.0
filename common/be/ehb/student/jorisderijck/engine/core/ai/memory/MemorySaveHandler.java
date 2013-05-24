@@ -40,7 +40,7 @@ public class MemorySaveHandler {
             }
             OutputStream outputfile = new FileOutputStream(file);
             OutputStream buffer = new BufferedOutputStream(outputfile);
-            ObjectOutput output = new ObjectOutputStream( buffer );
+            ObjectOutput output = new ObjectOutputStream(buffer);
             try{
               output.writeObject(memoryToSave);
             }
@@ -60,8 +60,8 @@ public class MemorySaveHandler {
             //use buffering
             File file = new File(worlddir + File.separatorChar + memoryToLoadTo.getUID()+".entity" );
             InputStream inputfile = new FileInputStream(file);
-            InputStream buffer = new BufferedInputStream( inputfile );
-            ObjectInput input = new ObjectInputStream ( buffer );
+            InputStream buffer = new BufferedInputStream(inputfile);
+            ObjectInput input = new ObjectInputStream (buffer);
             try{
               loadedMemory = (Memory) input.readObject();
             }
@@ -84,7 +84,7 @@ public class MemorySaveHandler {
      * */
     public boolean remove(Memory memoryToRemove,String worlddir)
     {
-        File file = new File(worlddir + File.separatorChar + memoryToRemove.getUID()+".entity" );
+        File file = new File(worlddir + File.separatorChar + memoryToRemove.getUID()+".entity");
         file.delete();
         return true;
     }

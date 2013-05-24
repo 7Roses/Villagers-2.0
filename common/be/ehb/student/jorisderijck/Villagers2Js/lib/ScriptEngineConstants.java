@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 
 import be.ehb.student.jorisderijck.engine.core.script.ScriptContainer;
 
-public class ScriptEngineConstants {
+public final class ScriptEngineConstants {
 
     public final static int INITAL_CACHE_SIZE = 10;
     

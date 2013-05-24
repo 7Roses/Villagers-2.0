@@ -58,4 +58,9 @@ public class ScriptCache {
         }
         return returnvar;
     }
+
+    public int getsize()
+    {
+        return this.cache.size();
+    }
 }

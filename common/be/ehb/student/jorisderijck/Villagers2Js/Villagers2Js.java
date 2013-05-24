@@ -4,28 +4,27 @@ import java.util.logging.Logger;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.common.MinecraftForge;
 import be.ehb.student.jorisderijck.Villagers2Js.entity.GenericVillager;
 import be.ehb.student.jorisderijck.Villagers2Js.lib.Reference;
 import be.ehb.student.jorisderijck.Villagers2Js.proxy.CommonProxy;
 import be.ehb.student.jorisderijck.engine.core.ai.AIEngine;
 import be.ehb.student.jorisderijck.engine.core.ai.memory.MemorySaveHandler;
+import be.ehb.student.jorisderijck.engine.core.ai.village.VillageManager;
 import be.ehb.student.jorisderijck.engine.core.script.ScriptCache;
 import be.ehb.student.jorisderijck.engine.core.script.ScriptManager;
 import be.ehb.student.jorisderijck.engine.core.script.ScriptProcessor;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
-
 
 @Mod(
         modid=Reference.MOD_ID,
@@ -47,6 +46,8 @@ public class Villagers2Js {
 	
 	// my scriptmanager instance
 	public ScriptManager scriptmanager;
+	
+	public VillageManager villagemanager;
 	
 	// my AIEngine instance
 	public static AIEngine aiEngine;
@@ -73,6 +74,12 @@ public class Villagers2Js {
 		aiEngine = new AIEngine(scriptcache,scriptEngine);
 		memorySaveHandler = new MemorySaveHandler();
 		
+		//add VillageManager to the mod:
+		this.villagemanager = new VillageManager();
+		//TickRegistry.registerTickHandler(new VillageTick(), Side.SERVER); // not needed, get World.getTotalTime() for time, so don't us a tick for counting the ticks a village exists.
+		
+		MinecraftForge.EVENT_BUS.register(new Villagers2JSEventHandler());
+		
 		log.info("mod succesfull loaded");
 	}
 	
@@ -95,20 +102,6 @@ public class Villagers2Js {
 	@PostInit
 	public void postInit(FMLPostInitializationEvent event){}
 	
-	
-    @ForgeSubscribe
-    public void worldLoad(WorldEvent.Load event)
-    {
-        if(event.world.isRemote) return;
-        this.scriptmanager.loadWorldScripts(event.world);
-    }
-    
-    @ForgeSubscribe
-    public void worldUnload(WorldEvent.Unload event)
-    {
-        if(event.world.isRemote) return;
-        // no code should be run or should it?still setting the hook for the moment (will be cleared once cleanup.
-    }
-	
+
 	
 }
