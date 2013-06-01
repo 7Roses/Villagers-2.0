@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +27,11 @@ public class VillageManager {
 
     private HashMap<World, WorldVillageContainer> worldVillages;
 
+    public VillageManager()
+    {
+        worldVillages = new HashMap<World,WorldVillageContainer>();
+    }
+    
     public void loadWorldVillages(World world)
     {
         StringBuilder sb = new StringBuilder("saves");
@@ -36,7 +42,15 @@ public class VillageManager {
                         : world.provider.getSaveFolder());
         String loadDir = sb.toString();
         log.info(String.format("current loaddir: %s", loadDir));
-        WorldVillageContainer wvc = loadWorldFromFile(loadDir);
+        WorldVillageContainer wvc =null;
+        try
+        {
+            wvc = loadWorldFromFile(loadDir);
+        } catch (FileNotFoundException e)
+        {
+            log.warning("could not find any village save file for Villagers2JS, if you just started the world this is normal!");
+            wvc = new WorldVillageContainer();
+        }
         if (wvc == null)
         {
             wvc = new WorldVillageContainer(); // none existed, so make one.
@@ -90,7 +104,7 @@ public class VillageManager {
         }
     }
 
-    private WorldVillageContainer loadWorldFromFile(String loadDir)
+    private WorldVillageContainer loadWorldFromFile(String loadDir) throws FileNotFoundException
     {
         WorldVillageContainer villageContainer = null;
         try

@@ -91,8 +91,6 @@ public class ScriptProcessor {
 		for (String s : functions) {
 			runScriptFunction(s);
 		}
-
-		// this.invokeEngine.invokeFunction("onDebug");
 	}
 
 	

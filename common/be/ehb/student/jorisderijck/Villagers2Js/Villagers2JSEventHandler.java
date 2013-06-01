@@ -27,7 +27,7 @@ public class Villagers2JSEventHandler {
     @ForgeSubscribe
     public void worldSaves(WorldEvent.Save event)
     {
-        log.info("saving should have worked? ");
+        Villagers2Js.instance.villagemanager.saveWorldVillage(event.world);
     }
     
     @ForgeSubscribe

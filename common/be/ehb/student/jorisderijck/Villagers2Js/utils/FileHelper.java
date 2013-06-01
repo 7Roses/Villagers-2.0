@@ -6,6 +6,12 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * based on code found on:
+ * (mkyong.com) http://www.mkyong.com/java/how-to-find-files-with-certain-extension-only/
+ * visited on 7 may 2013
+ * */
 public class FileHelper {
 
     public static class ExtensionFilter implements FilenameFilter {
@@ -32,15 +38,10 @@ public class FileHelper {
 
     public static List<String> listFiles(String folder, String ext)
     {
-
         ExtensionFilter filter = new ExtensionFilter(ext);
-
         File dir = new File(folder);
-
         if (dir.isDirectory() == false) { return null; }
-
         ArrayList<String> fileList = new ArrayList<String>();
-
         for (File f : dir.listFiles(filter))
         {
             fileList.add(f.getPath());

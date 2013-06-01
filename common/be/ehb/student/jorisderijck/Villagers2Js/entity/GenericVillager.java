@@ -1,6 +1,7 @@
 package be.ehb.student.jorisderijck.Villagers2Js.entity;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -16,6 +17,10 @@ import be.ehb.student.jorisderijck.engine.core.ai.memory.Memory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagDouble;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 
 public class GenericVillager extends EntityLiving {
@@ -54,6 +59,17 @@ public class GenericVillager extends EntityLiving {
 	public void writeEntityToNBT(NBTTagCompound nbttag) {
 		super.writeEntityToNBT(nbttag);
 		
+		if (this.getScriptContainer().getScriptCount()>0){
+		    List<Script> scripts = this.getScriptContainer().getScripts();
+		    String[] stringlist = new String[scripts.size()];
+		    for (int i = 0;i< scripts.size();i++)
+		    {
+		        stringlist[i] = scripts.get(i).getScriptLocation();
+		    }
+		    nbttag.setTag("Scripts", this.newStringNBTList(stringlist));
+		}
+		else
+		    nbttag.setTag("Scripts", this.newStringNBTList(new String[] {}));
 		/*	
 		NBTTagList sensorScripts = new NBTTagList();
 		sensorScripts.appendTag(this.sensorScripts
@@ -71,11 +87,23 @@ public class GenericVillager extends EntityLiving {
 		        new StringBuilder("saves").append(File.separatorChar).append(world).append(File.separatorChar).append("entities").toString());	
 	}
 
-	@Override
+
+
+    @Override
 	public void readEntityFromNBT(NBTTagCompound tag) {
 		super.readEntityFromNBT(tag);
 		log.info("read from NBT");
 			
+		
+		NBTTagList nbttaglist = tag.getTagList("Scripts");
+		for (int i = 0;i<nbttaglist.tagCount();i++)
+		{
+		    String s = ((NBTTagString)nbttaglist.tagAt(i)).data;
+		    if (s == null || s.length()==0) continue;
+		    Script ss = new SensorScript(s);
+		    this.getScriptContainer().addScript(ss);
+		}//*/
+		
 		if (this.memory == null)
         {
             log.warning("somhow the entity didn't had a memory, creating one now");
@@ -113,30 +141,9 @@ public class GenericVillager extends EntityLiving {
 	}
 
 	@Override
-	protected void entityInit() {
-		// TODO Auto-generated method stub
-		super.entityInit();
-	}
-
-	// still to be thought of functions (for rendering ect..)
-
-	@Override
-	protected void updateAITasks() {
-		// TODO Auto-generated method stub
-		super.updateAITasks(); // this calls theupdateAITick...
-	}
-
-	@Override
 	protected void updateAITick() {
-		// TODO Auto-generated method stub
-		// super.updateAITick();
-	//	System.out.println("have : " + this.sensorScripts.getScriptCount()+ "sensorScripts");
 		fsmEngine.updateSensors(this);
-		fsmEngine.tick(this);
-		//System.out.println("aimove: "+this.getAIMoveSpeed());
-	//	System.out.println("aipath: "+(this.getNavigator().getPath()==null?"null!!":this.getNavigator().getPath()));
-		
-		// fsmActor.update();
+		//fsmEngine.tick(this);
 	}
 
 	private boolean first = true;
@@ -144,14 +151,9 @@ public class GenericVillager extends EntityLiving {
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		if (first) {
-		    // System.out.println("filepath: "+(new File("resource/mod/Villagers2Js/test.js")).getAbsolutePath());
-			//SensorScript ss = new SensorScript("resource/mod/Villagers2Js/test.js");
-		    SensorScript ss = new SensorScript("testscript");
-			if (this.sensorScripts == null) {
-				this.sensorScripts = new ScriptContainer();
-			}
-			this.sensorScripts.addScript(ss);
+		if (first && this.getScriptContainer().getScriptCount()==0) {
+		    Script ss = new SensorScript("testscript");
+			this.getScriptContainer().addScript(ss);
 			first = false;
 		}
 	}
@@ -167,8 +169,16 @@ public class GenericVillager extends EntityLiving {
 	    }
 	}
 	
+	
+	public ScriptContainer getScriptContainer()
+	{
+        if (this.sensorScripts == null) {
+            this.sensorScripts = new ScriptContainer();
+        }
+        return this.sensorScripts;
+	}
 	public List<Script> getSensorScripts() {
-		return this.sensorScripts.getScripts();
+		return this.getScriptContainer().getScripts();
 	}
 
 	public Memory getMemory() {
@@ -187,5 +197,18 @@ public class GenericVillager extends EntityLiving {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+    private NBTTagList newStringNBTList(String[] strings)
+    {
+        NBTTagList nbttaglist = new NBTTagList();
+        String[] list = strings;
+        int i = strings.length;
+        for (int j = 0; j < i; ++j)
+        {
+            String s = list[j];
+            nbttaglist.appendTag(new NBTTagString((String)null, s));
+        }
+        return nbttaglist;
+        
+    }
 }

@@ -51,7 +51,7 @@ public class AIEngine {
 		Iterator<Script> itr = agent.getSensorScripts().iterator();
 		bindProxy(agent);
 		while (itr.hasNext()) {
-			SensorScript currentScript = (SensorScript) itr.next();
+			Script currentScript = (Script) itr.next();
 			ArrayList<String> functionsToCall = new ArrayList<String>();
 			if (currentScript.status == Script.NEW) {
 				functionsToCall.add("onStartSensor");
@@ -67,7 +67,8 @@ public class AIEngine {
 					 functions = functionsToCall.toArray(functions);
 			try
             {
-                this.scriptprocessor.runScript(cache.getScriptByScriptName(currentScript.getScriptLocation())
+			    // debug:
+		         this.scriptprocessor.runScript(cache.getScriptByScriptName(currentScript.getScriptLocation())
                         , functions);
             } catch (NoSuchMethodException e)
             {

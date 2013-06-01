@@ -11,17 +11,16 @@ public class SensorScript extends Script {
 
 	public SensorScript(String scriptLocation)
 	{
+	    super(scriptLocation);
 		this.referenceCount = 1;
-		this.scriptLocation = scriptLocation;
 		this.status = Script.NEW;
 	}
 	
 	
 	public SensorScript() {
+	    super("");
 		this.referenceCount = 1;
-		this.scriptLocation = "";
 		this.status = Script.NEW;
-
 	}
 
 
@@ -39,13 +38,8 @@ public class SensorScript extends Script {
 		roottag.setByte(SensorScript.statusTag, this.status);
 	}
 
-	public String getScriptLocation() {
-		return this.scriptLocation;
-	}
-
-
 	public static Script loadScriptFromNBT(NBTTagCompound scriptTag) {
-		SensorScript ss = new SensorScript();
+		Script ss = new SensorScript();
 		ss.readEntityFromNBT(scriptTag);
 		return ss;
 	}

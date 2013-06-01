@@ -8,4 +8,6 @@ public final class AIEngineConstants {
     
     public final static String JS_BIND_SCRIPTSELF = "self";
     public final static String JS_BIND_VILLAGEFINDER = "villageutils";
+    public final static String JS_BIND_UTILS = "utils";
+    public final static String JS_BIND_LOG = "Logger";
 }

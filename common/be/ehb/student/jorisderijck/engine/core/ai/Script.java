@@ -20,4 +20,14 @@ public abstract class Script {
 	public abstract void readEntityFromNBT(NBTTagCompound var1);
     public abstract void writeEntityToNBT(NBTTagCompound var1);
 
+    public Script(String scriptLocation)
+    {
+        this.scriptLocation = scriptLocation;
+    }
+    
+    public String toString(){return this.scriptLocation;}
+    public String getScriptLocation()
+    {
+    	return this.scriptLocation;
+    }
 }

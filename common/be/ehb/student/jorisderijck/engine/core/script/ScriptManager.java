@@ -31,8 +31,11 @@ public class ScriptManager {
     /** script for loading of all default scripts (delivered with the mod) */
     public void loadScripts()
     {
+        // an older version, can't be used when in deployed state!
         int scriptsLoaded = loadFromDirectory(ScriptEngineConstants.DEAFAULT_SCRIPTS_PAHT);
         log.info("ScriptManager loaded: " + scriptsLoaded + " into it's cache");
+        // try to add an extra version:
+        //loadFromURLs()
     }
 
     /**
