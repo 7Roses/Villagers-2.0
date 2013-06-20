@@ -1,6 +1,7 @@
 package be.ehb.student.jorisderijck.engine.binds;
 
 import be.ehb.student.jorisderijck.engine.core.ai.memory.Memory;
+import be.ehb.student.jorisderijck.engine.scriptutils.communication.Message;
 
 public class MemoryProxy implements IMemoryProxy{
 
@@ -44,6 +45,12 @@ public class MemoryProxy implements IMemoryProxy{
     public Boolean has(String variableName) {
 		return this.memory.hasKey(variableName);
 	}
+
+    @Override
+    public Message getNextMessage(int time)
+    {
+            return this.memory.getMessage(time);
+    }
 	
 	
 }

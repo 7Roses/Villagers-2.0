@@ -23,6 +23,7 @@ public class Memory implements IMemory,IMessageSaver {
     
     public Memory(UUID myEntity)
     {
+        this.messageMemory = new ArrayList<Message>();
         this.mySaveUUID = myEntity;
         this.mydata = new HashMap<String,Object>();
     }
@@ -72,6 +73,7 @@ public class Memory implements IMemory,IMessageSaver {
     @Override
     public Message getMessage(int time)
     {
+        System.out.println("we search for a message with time: " + time);
         Message messageToReturn = null;
         for(Message m:messageMemory)
         {
@@ -80,14 +82,18 @@ public class Memory implements IMemory,IMessageSaver {
                messageToReturn = m; 
             }
         }
+        if (messageToReturn != null){
+            System.out.println("we found one, message: " + messageToReturn.getMessageData());
+            messageMemory.remove(messageToReturn);
+        }
         
-        messageMemory.remove(messageToReturn);
         return messageToReturn;
     }
 
     @Override
     public boolean addMessage(Message message)
     {
+        System.out.println("added a message for " + message.getDeliveryTime());
         return messageMemory.add(message);
     }
 

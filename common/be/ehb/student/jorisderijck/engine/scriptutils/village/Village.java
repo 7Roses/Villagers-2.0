@@ -59,6 +59,7 @@ public class Village implements IBuildingRegister, Serializable, IVillage{
 	
 	
 	public Village(ChunkCoordinates chunkCoordinates) {
+	    this.villagers = new HashSet<GenericVillager>();
 	    this.villageId = UUID.randomUUID();
         this.centerOfTheVillage = chunkCoordinates;
         this.buildings = new ArrayList<Building>();

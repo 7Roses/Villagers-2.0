@@ -14,7 +14,7 @@ public class AtomicalJob extends AbstractJob implements Serializable {
     private ArrayList<JobProperty> jobProperties;
     
     
-    public AtomicalJob(String jobName){}
+    public AtomicalJob(String jobName){super(jobName);}
     
     public void addProperty(JobProperty property)
     {

@@ -26,6 +26,12 @@ public class WorldVillageContainer implements Serializable, IWorldVillageFinder 
     private ArrayList<Village> villages;
     
     
+    public WorldVillageContainer()
+    {
+        villages = new ArrayList<Village>();
+    }
+    
+    
     /* (non-Javadoc)
      * @see be.ehb.student.jorisderijck.engine.core.ai.village.IWorldVillageFinder#getClossestVillage(int, int, int)
      */
@@ -34,6 +40,7 @@ public class WorldVillageContainer implements Serializable, IWorldVillageFinder 
     {
         Village clossest = null;
         float distance = Float.MAX_VALUE;
+        if (villages == null){villages = new ArrayList<Village>();}
         for (Village v:villages)
         {
             float dist = v.distanceToVillage(x, y, z); 

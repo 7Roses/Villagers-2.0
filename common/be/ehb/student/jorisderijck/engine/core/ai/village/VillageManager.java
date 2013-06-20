@@ -132,6 +132,10 @@ public class VillageManager {
 
     public IWorldVillageFinder getWorldVillageContainer(World world)
     {
+        if (!this.worldVillages.containsKey(world))
+        {
+            this.worldVillages.put(world, new WorldVillageContainer());
+        }
         return this.worldVillages.get(world);
     }
 }

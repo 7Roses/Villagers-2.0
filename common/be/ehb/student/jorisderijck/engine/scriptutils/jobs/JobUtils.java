@@ -2,6 +2,8 @@ package be.ehb.student.jorisderijck.engine.scriptutils.jobs;
 
 public class JobUtils implements IJobUtils {
 
+    
+    
     @Override
     public AtomicalJob createAtomicJob(String jobname)
     {

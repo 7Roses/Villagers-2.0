@@ -7,10 +7,12 @@ import be.ehb.student.jorisderijck.Villagers2Js.Villagers2Js;
 import be.ehb.student.jorisderijck.Villagers2Js.entity.GenericVillager;
 import be.ehb.student.jorisderijck.engine.binds.IVillagerProxy;
 import be.ehb.student.jorisderijck.engine.binds.IWorldVillageFinder;
+import be.ehb.student.jorisderijck.engine.scriptutils.communication.IMessageUtils;
+import be.ehb.student.jorisderijck.engine.scriptutils.communication.Message;
 import be.ehb.student.jorisderijck.engine.scriptutils.village.IVillage;
 import be.ehb.student.jorisderijck.engine.scriptutils.village.Village;
 
-public class VillageScriptFacade implements IAgentBinder, IWorldVillageFinder {
+public class VillageScriptFacade implements IAgentBinder, IWorldVillageFinder, IMessageUtils {
     
     private GenericVillager agent;
     @Override
@@ -35,5 +37,11 @@ public class VillageScriptFacade implements IAgentBinder, IWorldVillageFinder {
     public IVillage getVillageById(UUID villageId)
     {
         return Villagers2Js.instance.villagemanager.getWorldVillageContainer(agent.worldObj).getVillageById(villageId);
+    }
+
+    @Override
+    public Message createMessage(String message, int time)
+    {
+         return new Message(message,time);
     }
 }

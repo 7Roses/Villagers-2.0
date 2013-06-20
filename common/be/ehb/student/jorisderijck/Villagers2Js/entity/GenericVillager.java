@@ -15,6 +15,7 @@ import be.ehb.student.jorisderijck.engine.core.ai.ScriptContainer;
 import be.ehb.student.jorisderijck.engine.core.ai.SensorScript;
 import be.ehb.student.jorisderijck.engine.core.ai.memory.Memory;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagDouble;
@@ -23,7 +24,7 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 
-public class GenericVillager extends EntityLiving {
+public class GenericVillager extends EntityCreature {
 
     private static final Logger log = Logger.getLogger(Reference.MOD_ID);
     
@@ -53,6 +54,7 @@ public class GenericVillager extends EntityLiving {
 		this.getNavigator().setAvoidsWater(true);
 		this.getNavigator().setEnterDoors(true);
 		this.getNavigator().setCanSwim(true);
+		//this.setAIMoveSpeed(0.5f);
 	}
 
 	@Override

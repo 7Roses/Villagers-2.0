@@ -92,6 +92,8 @@ public class AIEngine {
 		self.setAgent(agent);
 		IAgentBinder villageHelp = (IAgentBinder) this.scriptprocessor.getBoundObject(AIEngineConstants.JS_BIND_VILLAGEFINDER);
 		villageHelp.setAgent(agent);
+		LoggingProxy logger = (LoggingProxy) this.scriptprocessor.getBoundObject("Logger");
+	        logger.setAgent(agent);
 	}
 
 	public void tick(GenericVillager genericVillager) {

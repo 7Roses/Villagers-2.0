@@ -1,5 +1,7 @@
 package be.ehb.student.jorisderijck.engine.binds;
 
+import be.ehb.student.jorisderijck.engine.scriptutils.communication.Message;
+
 public interface IMemoryProxy {
 
     public abstract void forget(String variableName);
@@ -10,4 +12,6 @@ public interface IMemoryProxy {
 
     public abstract Boolean has(String variableName);
 
+    public abstract Message getNextMessage(int time);
+    
 }

@@ -5,7 +5,7 @@ import be.ehb.student.jorisderijck.engine.scriptutils.jobs.*;
 public class ScriptJobUtils implements IJobUtils {
 
     private JobUtils jobutils;
-    
+    public static final AtomicalJob NOJOB = new AtomicalJob("none");
     public ScriptJobUtils(){
         jobutils = new JobUtils();
     }

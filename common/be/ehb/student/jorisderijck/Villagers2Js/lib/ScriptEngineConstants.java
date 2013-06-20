@@ -22,17 +22,15 @@ public final class ScriptEngineConstants {
     
     // next version testing for finding or loading them from the zipt itself. (or from classloader)
     public final static ArrayList<String> DEFAULT_SCRIPTS = new ArrayList<String>();
-    
     static
     {
         DEFAULT_SCRIPTS.add("scripts/corescripts/startup.js");
         DEFAULT_SCRIPTS.add("scripts/demo/demo.js");
     }
     
-    
     public static final String SCRIPT_EXTENSION = ".js";
 
-
     public static final boolean LOGGINGENABLED = true;
+    public static final double LOGGINGDISTANCE = 20;
     
 }

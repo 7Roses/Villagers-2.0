@@ -1,5 +1,6 @@
 package be.ehb.student.jorisderijck.engine.binds;
 
+import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.pathfinding.PathNavigate;
 import be.ehb.student.jorisderijck.Villagers2Js.Villagers2Js;
 import be.ehb.student.jorisderijck.Villagers2Js.entity.GenericVillager;
@@ -33,24 +34,7 @@ public class VillagerProxy implements IVillagerProxy {
 	@Override
     public boolean setDestination(Integer[] destination)
 	{
-	    System.out.println("SET NAV IS BEEN CALLED !!!!");
-	    boolean ret;
-		boolean doorallowed = true;
-		this.agent.getNavigator().clearPathEntity();
-		return this.agent.getNavigator().tryMoveToXYZ((double)destination[0], (double)destination[1],(double)destination[2], 0.3F);
-		/*
-		PathEntity foundPath = this.agent.worldObj.getEntityPathToXYZ(this.agent, destination[0], destination[1], destination[2], 50, doorallowed, false, false, false);
-		if (foundPath !=null)
-		{
-			System.out.println("my path exists!");	
-		} else {
-			System.out.println("NO PATH EXISTS???");
-		}
-		System.out.println(VillagerProxyDebug());
-		ret = this.agent.getNavigator().setPath(foundPath, this.agent.getAIMoveSpeed());
-		System.out.println(VillagerProxyDebug());
-		return ret;*/
-		
+	    return agent.getNavigator().tryMoveToXYZ(destination[0], destination[1], destination[2], 0.3F);
 	}
 	
 	/* (non-Javadoc)
